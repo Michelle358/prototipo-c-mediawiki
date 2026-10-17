@@ -47,7 +47,7 @@ svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .proto strong{font-size:14px}
 .proto .grp{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .proto .lbl{color:var(--proto-muted)}
-.proto button,.proto select{font:inherit;font-size:14px;min-height:36px;padding:4px 10px;border-radius:6px;border:1px solid #5b6b7e;background:transparent;color:var(--proto-text);cursor:pointer}
+.proto button,.proto select{font:inherit;font-size:14px;min-height:36px;padding:4px 10px;border-radius:6px;border:1px solid #5b6b7e;background:#5b6b7e;color:var(--proto-text);cursor:pointer}
 .proto button[aria-pressed="true"]{background:var(--proto-text);color:var(--proto-bg);border-color:var(--proto-text)}
 .proto label{display:flex;gap:6px;align-items:center;cursor:pointer}
 .proto input[type=checkbox]{width:18px;height:18px}
@@ -99,7 +99,7 @@ h1:focus{outline:none}
 .btn-tertiary{background:transparent;color:var(--text);border-color:var(--line)}
 .btn[disabled]{opacity:.65;cursor:progress}
 .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.list{list-style:none;padding:0;margin:0;display:grid;gap:10px;margin-top: 20px}
 .item{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:start;background:var(--bg)}
 .item .meta{font-size:14px;color:var(--muted);white-space:nowrap}
 .item p{margin:0;color:var(--muted);font-size:15px;grid-column:2/4}
@@ -174,6 +174,41 @@ dialog p{margin:0 0 16px;color:var(--muted)}
 .mapwrap .card{overflow-x:auto}
 .legend{font-size:15px;color:var(--muted)}
 
+/* ---------- accessibility and display preferences ---------- */
+.display-menu-container{position:relative}
+.display-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:1001;width:290px;padding:18px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.display-menu[hidden]{display:none!important}
+.display-section+.display-section{margin-top:18px;padding-top:15px;border-top:1px solid var(--line)}
+.display-section h3{font-size:14px;line-height:1.4;margin:0 0 10px;font-weight:700}
+.option-group{display:flex;gap:4px;padding:4px;background:var(--surface-2);border-radius:8px}
+.option-group button{flex:1;min-width:0;min-height:36px;padding:5px 6px;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--text);font:inherit;font-size:12px;cursor:pointer}
+.option-group button[aria-pressed="true"]{background:var(--bg);border-color:var(--line);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.beta{font-size:11px;font-weight:400;color:var(--muted);margin-left:4px}
+body.text-small{font-size:14px}
+body.text-standard{font-size:16px}
+body.text-large{font-size:18px}
+.device[data-content-width="standard"] main{max-width:1180px;width:100%;margin-inline:auto}
+.device[data-content-width="wide"] main{max-width:none;width:100%;margin-inline:0}
+/* ---------- Ajustes para celulares ---------- */
+@media screen and (max-width: 600px) {
+  .display-menu {
+    position: fixed;
+    top: 80px;
+    right: 12px;
+    left: auto;
+    width: 290px;
+    max-width: calc(100vw - 24px);
+    max-height: calc(100dvh - 100px);
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .option-group button {
+    font-size: 11px;
+    padding: 6px 3px;
+  }
+}
+
 /* ---------- tablet ---------- */
 @container app (max-width: 980px){
   .layout{grid-template-columns:minmax(0,1fr)}
@@ -212,7 +247,7 @@ dialog p{margin:0 0 16px;color:var(--muted)}
 
 <section class="proto" aria-label="Controles del prototipo">
   <strong>Prototipo C · controles de evaluación</strong>
-  <span class="lbl">(no forman parte de la interfaz evaluada)</span>
+  <!--span class="lbl">(no forman parte de la interfaz evaluada)</span>-->
   <div class="grp" role="group" aria-label="Dispositivo">
     <span class="lbl">Dispositivo:</span>
     <button type="button" data-dev="fit" aria-pressed="true">Ajustar</button>
@@ -251,8 +286,10 @@ dialog p{margin:0 0 16px;color:var(--muted)}
       <label for="q" class="sr-only">Buscar en la wiki</label>
       <input id="q" type="search" placeholder="Buscar en MediaWiki" autocomplete="off">
     </form>
+
+    <!-- top actions for desktop 
     <div class="top-actions">
-      <button class="iconbtn" type="button" data-oos aria-label="Accesibilidad">
+      <button class="iconbtn" type="button" data-oos aria-label="Accesibilidad y opciones de visualización">
         <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="15" r="3"/><circle cx="17" cy="15" r="3"/><path d="M10 15h4M4 15V8l2-3M20 15V8l-2-3"/></svg>
       </button>
       <button class="user" type="button" data-oos aria-label="Opciones de cuenta de Laura Gómez">
@@ -261,6 +298,48 @@ dialog p{margin:0 0 16px;color:var(--muted)}
         <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </button>
     </div>
+    -->
+
+    <div class="top-actions">
+      <div class="display-menu-container">
+        <button class="iconbtn" type="button" id="displayOptionsBtn"
+          aria-label="Accesibilidad y opciones de visualización"
+          aria-expanded="false" aria-controls="displayOptionsMenu">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="15" r="3"/><circle cx="17" cy="15" r="3"/><path d="M10 15h4M4 15V8l2-3M20 15V8l-2-3"/></svg>
+        </button>
+        <div class="display-menu" id="displayOptionsMenu" hidden>
+          <section class="display-section">
+            <h3>Texto</h3>
+            <div class="option-group" data-setting="text">
+              <button type="button" data-value="small" aria-pressed="false">Pequeño</button>
+              <button type="button" data-value="standard" aria-pressed="true">Estandar</button>
+              <button type="button" data-value="large" aria-pressed="false">Grande</button>
+            </div>
+          </section>
+          <section class="display-section">
+            <h3>Ancho</h3>
+            <div class="option-group" data-setting="width">
+              <button type="button" data-value="standard" aria-pressed="true">Estandar</button>
+              <button type="button" data-value="wide" aria-pressed="false">Ancho</button>
+            </div>
+          </section>
+          <section class="display-section">
+            <h3>Color</h3>
+            <div class="option-group" data-setting="color">
+              <button type="button" data-value="automatic" aria-pressed="true">Automático</button>
+              <button type="button" data-value="light" aria-pressed="false">Claro</button>
+              <button type="button" data-value="dark" aria-pressed="false">Oscuro</button>
+            </div>
+          </section>
+        </div>
+      </div>
+      <button class="user" type="button" data-oos aria-label="Opciones de cuenta de Laura Gómez">
+        <span class="avatar" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/></svg></span>
+        <span class="uname">Laura Gómez</span>
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+
   </header>
   <div class="layout">
     <nav class="side" id="side" aria-label="Navegación principal">
@@ -336,6 +415,53 @@ var KEY='protoC-draft';
 var S={query:'',title:'',from:'',content:'',summary:'',preview:false,publishing:false,revs:[],toast:false,tab:'leer',banner:'',draftAt:0,restoreOffer:null,loginWait:false,titleErr:'',p02msg:''};
 var view=document.getElementById('view'), dev=document.getElementById('device');
 var saveTimer=null, tick=null;
+
+/* Opciones de visualización: tamaño de texto, ancho y tema */
+var displayBtn=document.getElementById('displayOptionsBtn');
+var displayMenu=document.getElementById('displayOptionsMenu');
+if(displayBtn&&displayMenu){
+  displayBtn.addEventListener('click',function(){
+    var opening=displayMenu.hidden;
+    displayMenu.hidden=!opening;
+    displayBtn.setAttribute('aria-expanded',String(opening));
+  });
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.display-menu-container')){
+      displayMenu.hidden=true;
+      displayBtn.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!displayMenu.hidden){
+      displayMenu.hidden=true;
+      displayBtn.setAttribute('aria-expanded','false');
+      displayBtn.focus();
+    }
+  });
+  displayMenu.querySelectorAll('.option-group').forEach(function(group){
+    group.querySelectorAll('button').forEach(function(button){
+      button.addEventListener('click',function(){
+        var setting=group.getAttribute('data-setting');
+        var value=button.getAttribute('data-value');
+        group.querySelectorAll('button').forEach(function(b){
+          b.setAttribute('aria-pressed',String(b===button));
+        });
+        if(setting==='text'){
+          document.body.classList.remove('text-small','text-standard','text-large');
+          document.body.classList.add('text-'+value);
+        }else if(setting==='width'){
+          dev.setAttribute('data-content-width',value);
+        }else if(setting==='color'){
+          if(value==='automatic'){
+            document.documentElement.removeAttribute('data-theme');
+          }else{
+            document.documentElement.setAttribute('data-theme',value);
+          }
+        }
+      });
+    });
+  });
+}
 
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
